@@ -1,0 +1,30 @@
+ul {
+  /* list-style: disc;  
+  가능한 속성값
+  disc / circle / square /
+  "_ "(사용자 정의 기호) /
+  "하트" 
+  default 값  */
+  list-style: circle;
+}
+
+ul > li:first-child{
+  list-style: " @ ";
+}
+
+ol {
+  /*
+    1, 2, 3: decimal
+    a, b, c: lower-alpha
+    A, B, C: upper-alpha
+    i, ii, iii : lower-roman
+    I, II, III : upper-roman
+    알파, 베타, 감마 : lower-greek
+  */
+  list-style: lower-greek;
+}
+
+ol > li:last-child { /* 이렇게 작성하라는 거는 아니고
+가상 클래스 및 선택자 복습 개념으로 남겨놓음*/
+  list-style: lower-alpha;
+}

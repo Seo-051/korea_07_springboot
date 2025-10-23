@@ -1,0 +1,36 @@
+div.outer {
+  width: 600px;
+  height: 600px;
+  border: 2px solid gray;
+  padding: 10px 0 0 10px;
+}
+
+.outer > div {
+  width: 189px;
+  height: 189px;
+  margin: 0 7px 5px 0;
+  background-color: gray;
+  display: inline-block
+}
+.outer > .yellow {
+  background-color: orange;
+}
+
+.yellow > .red {
+  width: 60px;
+  height: 60px;
+  background-color: red;
+}
+
+/*
+  여기서 중요한 것은
+  .outer에서 div 태그
+  선택자까지 일부 속성값이
+  상속 되었을 겁니다. 하지만
+  div에서 새로 전부 다 세팅을 
+  해줬기 때문에 반영되는 값이
+  없습니다.
+
+  그리고 div에서 동일한 
+  수준에 있는 .yellow
+*/

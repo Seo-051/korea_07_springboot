@@ -1,0 +1,29 @@
+div.outer {
+  background-color: 
+  white;
+  width: 200px;
+  height: 200px;
+  /* overflow: auto; */
+}
+
+div.inner {
+  background-color: 
+  darkcyan;
+  width: 300px;
+  height: 300px;
+  overflow: scroll;
+}
+
+/*
+  overflow 속성의 특징 :
+    부모 요소에 적용해뒀을 때 자식 요소에
+    반영된다는 식으로 생각하실 필요가 있습니다.
+    즉 scroll이 생기는 것은 부모 영역이라고
+    봐야합니다.
+    `부모 영역의 크기만큼 자식 영역을 보여준다`는
+    관점에서 자식 div 요소에 overflow를 설정할 게
+    아니라 부모 div 요소에 설정해야 함을 의미합니다.
+
+    auto / visible / hidden / scroll이 있고,
+    overflow-x / overflow-y
+*/
