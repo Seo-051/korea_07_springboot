@@ -21,6 +21,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -29,6 +31,7 @@ public class SecurityConfig {
     private final UserDetailsServiceImpl userDetailsService;
     private final JwtService jwtService;
     private final AuthEntryPoint authEntryPoint;
+    private final CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -52,14 +55,23 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())        // CORS 설정(이하의 설정 사용)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth
+                .authorizeHttpRequests(auth -> auth
                         // /login 엔드포인트의 POST 요청은 모두 허용
-                        -> auth.requestMatchers(HttpMethod.POST, "/login").permitAll()
-                .requestMatchers("/swagger-ui/**", "/api-docs/**").permitAll()
-                .anyRequest().authenticated())
-        .exceptionHandling(ex -> ex
+                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                        .requestMatchers("/swagger-ui/index.html","/swagger-ui/**", "/api-docs/**").permitAll()
+                        .requestMatchers("/oauth2/**", "login/oauth2/code/*").permitAll()
+                        .anyRequest().authenticated())
+                .oauth2Login(oauth2 -> oauth2.successHandler(customOAuth2SuccessHandler))
+                .exceptionHandling(ex -> ex
                     .authenticationEntryPoint(authEntryPoint))
-        .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+//         개발 중 로그인 포함 모든 HTTP 메서드 요청 허용
+
+//        http.csrf(csrf -> csrf.disable())
+//                .cors(withDefaults())
+//                .authorizeHttpRequests(authorizeHttpRequests ->
+//                        authorizeHttpRequests.anyRequest().permitAll());
+
         return http.build();
     }
 
